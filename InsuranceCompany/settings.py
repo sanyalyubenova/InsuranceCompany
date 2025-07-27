@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f_##78(%gh%u7xgsfe8lb^hpylx63^3clb4^ejq!sziig_soss'
+SECRET_KEY = 'django-insecure-bp$0m@t+!8*-=gdew9$^k7jwh9086avd!ra&)zqzu1t=w$_8im'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,10 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'InsuranceCompany.accounts',
-    'InsuranceCompany.common',
-    'InsuranceCompany.clients',
     'InsuranceCompany.policies',
-    'InsuranceCompany.staff',
+    'InsuranceCompany.common',
 ]
 
 MIDDLEWARE = [
@@ -80,9 +78,13 @@ WSGI_APPLICATION = 'InsuranceCompany.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "petstagram",
+        "USER": "postgres",
+        "PASSWORD": "sl1234",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -122,6 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATICFILES_DIRS = (
+#     BASE_DIR / 'static',
+# )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
