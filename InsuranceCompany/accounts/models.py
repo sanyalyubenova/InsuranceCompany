@@ -19,6 +19,27 @@ class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='групи',
+        blank=True,
+        help_text='Групите, към които принадлежи потребителят.',
+        related_name="appuser_groups",
+        related_query_name="appuser",
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='права на потребителя',
+        blank=True,
+        help_text='Специфични права за този потребител.',
+        related_name="appuser_permissions",
+        related_query_name="appuser",
+    )
+
+    class Meta:
+        swappable = 'AUTH_USER_MODEL'
+
+
     def __str__(self):
         return self.email
 
