@@ -4,7 +4,7 @@ from InsuranceCompany.policies.models import InsurancePolicy, Discount, Claim
 
 @admin.register(InsurancePolicy)
 class InsurancePolicyAdmin(admin.ModelAdmin):
-    list_display = ('policy_number', 'user', 'car', 'start_date', 'end_date', 'price', 'is_active')
+    list_display = ('policy_number', 'user', 'car', 'start_date', 'end_date', 'price', 'is_active', 'offer')
     list_filter = ('is_active', 'start_date', 'end_date')
     search_fields = ('policy_number', 'user__email', 'car__make', 'car__model')
     ordering = ('-start_date',)
@@ -20,6 +20,9 @@ class InsurancePolicyAdmin(admin.ModelAdmin):
         ('Financial', {
             'fields': ('price', 'insurance_amount')
         }),
+        ('Offer', {
+            'fields': ('offer',)
+        })
     )
 
 
