@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<!-- Start Login Section-->
+    <div class="login-register-div">
+        <div class="login-register-box">
+            <h1>Влез в профила си:</h1>
+
+            <!-- Start Login Form-->
+            <form method="post">
+                {% csrf_token %}
+                {{ form.username|placeholder:'Въведи email' }}
+                {{ form.password|placeholder:'Въведи парола' }}
+
+                <!-- Login Button-->
+                <button type="submit">Влизане</button>
+            </form>
+            <!-- End Login Form -->
+
+        </div>
+        <div class="second-option">
+
+            <!-- Link to Register Page-->
+            <p>Или се  <a href="{% url 'register' %}">регистрирай.</a></p>
+        </div>
+    </div>
+    <!-- End Login Section-->
+{% endblock %} 

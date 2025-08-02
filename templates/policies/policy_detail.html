@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Полица {{ insurancepolicy.policy_number }}</h2>
+    <div class="offer-details">
+        <p>Автомобил: {{ insurancepolicy.car.make }} {{ insurancepolicy.car.model }}</p>
+        <p>Застрахователна сума: {{ insurancepolicy.insurance_amount }} лв.</p>
+        <p><strong>Цена на застраховката: {{ insurancepolicy.price }} лв.</strong></p>
+        <p>Статус: {{ insurancepolicy.get_status_display }}</p>
+    </div>
+
+    <a href="{% url 'profile_details' request.user.pk %}">Назад</a>
+{% endblock %}

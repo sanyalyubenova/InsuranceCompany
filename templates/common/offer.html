@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Вашата оферта</h2>
+    <div class="offer-details">
+        <p>Автомобил: {{ offer.car.make }} {{ offer.car.model }}</p>
+        <p>Застрахователна сума: {{ offer.insurance_amount }} лв.</p>
+        <p><strong>Цена на застраховката: {{ offer.premium }} лв.</strong></p>
+        <p>Статус: {{ offer.get_status_display }}</p>
+    </div>
+
+    {% if offer.status == 'pending' %}
+        <div class="offer-actions">
+            <form action="{% url 'accept_offer' offer.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Приеми оферта</button>
+            </form>
+            <form action="{% url 'reject_offer' offer.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Откажи оферта</button>
+            </form>
+        </div>
+
+    {% endif %}
+    <a href="{% url 'profile_details' request.user.pk %}">Назад</a>
+{% endblock %}

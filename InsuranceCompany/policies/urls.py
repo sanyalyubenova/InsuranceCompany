@@ -1,12 +1,10 @@
-from django.urls import path, include
-from InsuranceCompany.policies import views
+from django.urls import path
+from InsuranceCompany.policies.views import PolicyListView, PolicyCreateView, PolicyDetailView, PolicyUpdateView, PolicyDeleteView
 
 urlpatterns = [
-    path('calculator/', views.calculator, name='policy_calculator'),
-    path('create/', views.policy_create, name='create_policy'),
-    path('policy/<int:pk>/', include([
-        path('', views.policy_details, name='profile_details'),
-        path('edit/', views.policy_edit, name='profile_details'),
-        path('detete/', views.policy_delete, name='profile_delete'),
-    ]))
+    path('', PolicyListView.as_view(), name='policy_list'),
+    path('create/', PolicyCreateView.as_view(), name='policy_create'),
+    path('<int:pk>/', PolicyDetailView.as_view(), name='policy_detail'),
+    path('<int:pk>/edit/', PolicyUpdateView.as_view(), name='policy_update'),
+    path('<int:pk>/delete/', PolicyDeleteView.as_view(), name='policy_delete'),
 ]

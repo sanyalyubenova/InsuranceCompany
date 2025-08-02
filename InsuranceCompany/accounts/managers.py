@@ -1,3 +1,5 @@
+from django.contrib.auth import models as auth_models
+
 class AppUserManager(auth_models.UserManager):
 
     def create_user(self, email, password=None, **extra_fields):

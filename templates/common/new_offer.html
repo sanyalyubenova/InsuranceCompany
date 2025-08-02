@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Start Edit Profile Section -->
+    <div class="create">
+        <h2>Нова оферта</h2>
+
+        <!-- Start Offer From -->
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <p class="error"> {{ field.errors }} </p>
+                <div class="label-input">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                <br>
+
+            {% endfor %}
+
+            <!-- Calculate Premium Button -->
+            <button class="btn" type="submit">Вземи оферта</button>
+
+        </form>
+        <!-- End Edit Profile Form -->
+{% endblock %}
