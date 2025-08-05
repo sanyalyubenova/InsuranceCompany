@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.conf import settings
 
@@ -7,6 +8,7 @@ from InsuranceCompany.accounts.models import Profile
 # Create your models here.
 
 import random
+
 
 class InsurancePolicy(models.Model):
     policy_number = models.CharField(max_length=10, unique=True, editable=False)
@@ -17,7 +19,7 @@ class InsurancePolicy(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
     insurance_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    offer = models.OneToOneField('common.Offer', on_delete=models.CASCADE)
+    offer = models.OneToOneField('common.Offer', on_delete=models.CASCADE, null=True)
 
     def save(self, *args, **kwargs):
         if not self.policy_number:
@@ -30,22 +32,28 @@ class InsurancePolicy(models.Model):
     def get_status_display(self):
         return "Активна" if self.is_active else "Неактивна"
 
+
 class Discount(models.Model):
     DISCOUNT_TYPES = [
-        ('LOYALTY', 'Лоялност'),
-        ('SAFE_DRIVER', 'Без щети'),
-        ('MULTI_POLICY', 'Множествени полици'),
+        ('NEW_CLIENT', 'нов клиент'),
+        ('INSURANCE_AMOUNT', 'застрахователна сума над 10,000 лв.'),
+        ('CAR_AGE', 'автомобил под 10г.'),
     ]
 
-    discount_type = models.CharField(max_length=12, choices=DISCOUNT_TYPES)
-    percentage = models.DecimalField(max_digits=5, decimal_places=2)
-    applicable_to = models.ManyToManyField(InsurancePolicy, blank=True)
+    discount_type = models.CharField(choices=DISCOUNT_TYPES, unique=True)
+    percentage = models.IntegerField(
+        validators=[
+            MinValueValidator(1, message="Размерът на отстъпката не може да бъде по-малък от 1%"),
+            MaxValueValidator(25, message="Размерът на отстъпката не може да бъде по-голям от 25%")
+        ]
+    )
 
     def __str__(self):
-        return f"{self.discount_type} ({self.percentage}%)"
+        return f" Отстъпка за {self.get_discount_type_display()}"
 
     def discount_percentage(self):
         return self.percentage / 100
+
 
 class Claim(models.Model):
     CLAIM_STATUS = [

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Оферти</h2>
+    <a href="{% url 'offer_create' %}" class="btn btn-primary">Нова оферта</a>
+
+    {% if offers %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Номер</th>
+                {% if user.is_staff %}
+                    <th>Потребител</th>
+                {% endif %}
+                <th>Автомобил</th>
+                <th>Застрахователна сума</th>
+                <th>Премия</th>
+                <th>Статус</th>
+                <th>Дата</th>
+                <th>Действия</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for offer in offers %}
+                <tr>
+                    <td>{{ offer.id }}</td>
+                    {% if user.is_staff %}
+                        <td>{{ offer.user }}</td>
+                    {% endif %}
+                    <td>{{ offer.car.make }} {{ offer.car.model }} {{ offer.car.year }}</td>
+                    <td>{{ offer.insurance_amount }} лв.</td>
+                    <td>{{ offer.premium }} лв.</td>
+                    <td>{{ offer.get_status_display }}</td>
+                    <td>{{ offer.created_at|date:"d.m.Y" }}</td>
+                    <td>
+                        {% if offer.status == 'pending' or offer.status == 'rejected' %}
+                            <a href="{% url 'offer_details' offer.id %}" class="btn btn-sm btn-primary">Преглед</a>
+                        {% elif offer.created_policy %}
+                            <a href="{% url 'policy_detail' offer.created_policy.id %}" class="btn btn-sm btn-info">
+                                Полица #{{ offer.created_policy.policy_number }}
+                            </a>
+                        {% else %}
+                            <span class="text-muted">Няма създадена полица</span>
+                        {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нямате оферти.</p>
+    {% endif %}
+{% endblock %}

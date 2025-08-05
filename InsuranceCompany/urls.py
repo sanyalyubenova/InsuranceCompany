@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.messages import api
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 from InsuranceCompany.policies.views import APIPolicyListView, APIPolicyDetailView
 
@@ -29,4 +31,4 @@ urlpatterns = [
     path('', include('InsuranceCompany.common.urls')),
     path('accounts/', include('InsuranceCompany.accounts.urls')),
     path('policies/', include('InsuranceCompany.policies.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

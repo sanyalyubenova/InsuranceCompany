@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Автомобил с ID {{ car.id }}</h2>
+    <div class="car-details" style="margin-top: 30px">
+        <p><strong>Марка:</strong><a style="margin-left: 10px"> {{ car.make }} </a></p>
+        <p><strong>Модел:</strong><a style="margin-left: 10px"> {{ car.model }} </a></p>
+        <p><strong>Година на производство:</strong><a style="margin-left: 10px"> {{ car.year }} г.</a></p>
+    </div>
+
+    <!-- Link to Edit Car  -->
+    {% if perms.common.change_car %}
+        <div class="d-flex gap-2" style="margin-bottom: 5px">
+        <a href="{% url 'car_edit' car.pk %}" class="btn btn-primary">Редактирай автомобила</a>
+        <p>
+        </p>
+    {% endif %}
+
+    <!-- Link to Delete Car-->
+{#    {% if perms.common.delete_car %}#}
+        <a href="{% url 'car_delete' car.pk %}" class="btn btn-danger">Изтрий автомобила</a>
+        </div>
+{#    {% endif %}#}
+    <a class="btn btn-primary" href="{% url 'car_list' %}">Назад</a>
+{% endblock %}

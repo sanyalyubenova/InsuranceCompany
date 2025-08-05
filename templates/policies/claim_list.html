@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Щети</h2>
+    <a href="{% url 'claim_create' %}" class="btn btn-primary">Завеждане на щета</a>
+
+    {% if claims %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                {#                {% if user.is_staff %}#}
+                {#                    <th>Потребител</th>#}
+                {#                {% endif %}#}
+                <th>Полица</th>
+                <th>Дата на щета</th>
+                <th style="width: 30%;">Описание</th>
+                <th>Сума на щетата</th>
+                <th>Статус</th>
+                <th>Снимка</th>
+                <th>Действия</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for claim in claims %}
+                <tr>
+                    <td>{{ claim.id }}</td>
+                    {#                    {% if user.is_staff %}#}
+                    {#                        <td>{{ car.user }}</td>#}
+                    {#                    {% endif %}#}
+                    <td>{{ claim.policy.policy_number }}</td>
+                    <td>{{ claim.claim_date|date:"d.m.Y" }} г.</td>
+                    <td>
+                        <div class="description-container">
+                            <div class="description-short">
+                                {{ claim.description|truncatechars:50 }}
+                            </div>
+                            {% if claim.description|length > 100 %}
+                                <div class="description-full" style="display: none;">
+                                    {{ claim.description }}
+                                </div>
+                                <button class="btn-more btn-link p-0" onclick="toggleDescription(this)">повече...</button>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>{{ claim.amount }} лв.</td>
+                    <td>{{ claim.get_status_display }}</td>
+                    <td>
+                        {% if claim.photos %}
+                            <a href="{{ claim.photos.url }}" target="_blank">
+                                <img src="{{ claim.photos.url }}" alt="Снимка на щета"
+                                     style="max-height: 50px; max-width: 50px; object-fit: cover;">
+                            </a>
+                        {% else %}
+                            <span class="text-muted">Няма снимка</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'claim_details' claim.pk %}" class="btn btn-sm btn-primary">Преглед</a>
+                    </td>
+                    <td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нямате щети.</p>
+    {% endif %}
+    <script>
+        function toggleDescription(button) {
+            const container = button.closest('.description-container');
+            const short = container.querySelector('.description-short');
+            const full = container.querySelector('.description-full');
+
+            if (full.style.display === 'none') {
+                full.style.display = 'block';
+                short.style.display = 'none';
+                button.textContent = 'по-малко';
+            } else {
+                full.style.display = 'none';
+                short.style.display = 'block';
+                button.textContent = 'повече...';
+            }
+        }
+    </script>
+
+    <style>
+        .description-container {
+            position: relative;
+        }
+
+        .btn-more {
+            font-weight: bold;
+            font-style: italic;
+            background: none;
+            border: none;
+            color: #000000;
+            cursor: pointer;
+            padding-left: 5px;
+        }
+
+        .btn-more:hover {
+            text-decoration: none;
+            cursor: pointer;
+            color: #000000;
+        }
+
+        .description-full {
+            width: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+{% endblock %}

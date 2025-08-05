@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
  <!-- Start Delete Profile Section -->
-    <div class="delete-profile">
-    <h1>Изтриване на профила</h1>
-        <p>Да се изтрие ли профила?</p>
+    <div class="delete-car">
+    <h1>Изтриване на автомобила</h1>
+        <p>Желаете ли да изтрийете автомобила?</p>
         <strong style="color: red">Това действие е необратимо.</strong>
         <p></p>
-        <form method="post" action="{% url 'profile_delete' request.user.pk %}">
+        <form method="post" action="{% url 'car_delete' object.id %}">
             {% csrf_token %}
             <div class="sure-buttons">
                 <!-- Yes (Delete Profile) Button -->
-                <button class="btn btn-danger">Изтрий профила</button>
+                <button class="btn btn-danger">Изтрий автомобила</button>
                 <!-- Go Back Button -->
-                <a class="btn btn-primary" href="javascript:history.back()">Върни се</a>
+                <a class="btn" href="javascript:history.back()" style="border-color: black">Върни се</a>
             </div>
         </form>
     </div>

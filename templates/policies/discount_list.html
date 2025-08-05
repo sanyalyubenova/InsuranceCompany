@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Отстъпки</h2>
+    <a href="{% url 'discount_create' %}" class="btn btn-primary">Създаване на отстъпка</a>
+
+    {% if discounts %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Вид отстъпка</th>
+                <th>Размер</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for discount in discounts %}
+                <tr>
+                    <td>{{ discount.pk }}</td>
+                    <td>{{ discount }}</td>
+                    <td>{{ discount.percentage }} %</td>
+                    <td>
+                        {% if perms.discounts.change_discount %}
+                            <a href="{% url 'discount_edit' discount.pk %}" class="btn btn-primary">Редактирай</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if perms.discounts.delete_discount %}
+                    <a href="{% url 'discount_delete' discount.pk %}" class="btn btn-danger">Изтрий</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Няма създадени отстъпки.</p>
+    {% endif %}
+{% endblock %}

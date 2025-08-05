@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <!-- Start Policy Edit Section -->
+    <!-- Start Edit Offer Section -->
     <div class="edit-delete" style="
         align-items: start;
         max-width: 600px;
         padding: 20px;">
-        <h2>Редактиране на полица</h2>
+        <h2>Редактиране на автомобил</h2>
 
-        <!-- Start Policy Edit From -->
+        <!-- Start Edit Offer From -->
         <form method="post">
             {% csrf_token %}
 
@@ -24,10 +24,10 @@
 
             {% endfor %}
 
-            <!-- Edit Policy Button -->
+            <!-- Edit Offer Button -->
             <button class="btn btn-primary" type="submit">Редактирай</button>
 
         </form>
     </div>
-        <!-- End EPolicy Edit Form -->
+        <!-- End Edit Offer Form -->
 {% endblock %}

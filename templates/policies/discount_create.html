@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Start Discount Create Section -->
+    <div class="edit-delete" style="
+        align-items: start;
+        max-width: 600px;
+        padding: 20px;">
+        <h2>Създаване на отстъпка</h2>
+
+        <!-- Start Discount Create From -->
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+{#                <p class="error" style="color: red; margin-bottom: 5px;"> {{ field.errors }} </p>#}
+                <div class="label-input" style="
+                    display: flex;
+                    flex-direction: column;">
+                    <label style="margin-bottom: 5px; font-weight: bold;">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                <br>
+                {% if field.errors %}
+                    <div class="text-danger">
+                        {% for error in field.errors %}
+                            <small>{{ error.message }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+
+            {% endfor %}
+
+            <!-- Discount Create Button -->
+            <button class="btn btn-primary" type="submit">Създай отстъпка</button>
+
+        </form>
+    </div>
+    <!-- End Discount Create Form -->
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Start Claim Create Section -->
+    <div class="create" style="
+        align-items: start;
+        max-width: 600px;
+        padding: 20px;">
+        <h2>Завеждане на щета</h2>
+
+        <!-- Start Claim Create Form -->
+        <form enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <p class="error"> {{ field.errors }} </p>
+                <div class="label-input">
+                    <label style="font-weight: bold">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                <br>
+            {% endfor %}
+
+            <!-- Claim Create Button -->
+            <button class="btn btn-primary" type="submit">Изпрати данни за щета</button>
+
+        </form>
+        <!-- End Claim Create Form -->
+{% endblock %}

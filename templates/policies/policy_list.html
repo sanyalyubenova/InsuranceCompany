@@ -1,5 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h2>Полици</h2>
+    <a href="{% url 'policy_create' %}" class="btn btn-primary">Нова полица</a>
 
+    {% if policies %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Автомобил</th>
+                <th>Застрахователна сума</th>
+                <th>Премия</th>
+                <th>Статус</th>
+                <th>Начална дата</th>
+                <th>Крайна дата</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for policy in policies %}
+                <tr>
+                    <td>{{ policy.policy_number }}</td>
+                    <td>{{ policy.car.make }} {{ policy.car.model }} {{ policy.car.year }}</td>
+                    <td>{{ policy.insurance_amount }} лв.</td>
+                    <td>{{ policy.price }} лв.</td>
+                    <td>{{ policy.get_status_display }}</td>
+                    <td>{{ policy.start_date|date:"d.m.Y" }}</td>
+                    <td>{{ policy.end_date|date:"d.m.Y" }}</td>
+                    <td>
+                        <a href="{% url 'policy_detail' policy.id %}" class="btn btn-sm btn-primary">Преглед</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нямате полици.</p>
+    {% endif %}
 {% endblock %} 

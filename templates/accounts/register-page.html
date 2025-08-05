@@ -2,18 +2,18 @@
 {% load custom_filters %}
 
 {% block content %}
- <!-- Start Register Form-->
-        <form method="post">
-            {% csrf_token %}
-            {{ form.email|placeholder:'Въведи имейл' }}
-            {{ form.email.errors }}
-            {{ form.password1|placeholder:'Въведи парола' }}
-            {{ form.password1.errors }}
-            {{ form.password2|placeholder:'Повтори паролата' }}
-            {{ form.password2.errors }}
+    <!-- Start Register Form-->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.email|placeholder:'Въведи имейл' }}
+        {{ form.email.errors }}
+        {{ form.password1|placeholder:'Въведи парола' }}
+        {{ form.password1.errors }}
+        {{ form.password2|placeholder:'Повтори паролата' }}
+        {{ form.password2.errors }}
 
-            <!-- Register Button-->
-            <button type="submit">Регистрирай се</button>
-        </form>
-        <!-- End Register Form -->
+        <!-- Register Button-->
+        <button type="submit">Регистрирай се</button>
+    </form>
+    <!-- End Register Form -->
 {% endblock %}

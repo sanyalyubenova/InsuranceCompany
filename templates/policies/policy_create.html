@@ -1,5 +1,33 @@
 {% extends 'base.html' %}
-
 {% block content %}
+    <!-- Start Policy Create Section -->
+    <div class="edit-delete" style="
+        align-items: start;
+        max-width: 600px;
+        padding: 20px;">
+        <h2>Нова полица</h2>
 
-{% endblock %} 
+        <!-- Start Policy Create From -->
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <p class="error" style="color: red; margin-bottom: 5px;"> {{ field.errors }} </p>
+                <div class="label-input" style="
+                    display: flex;
+                    flex-direction: column;">
+                    <label style="margin-bottom: 5px; font-weight: bold;">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                <br>
+
+            {% endfor %}
+
+            <!-- Policy Create Button -->
+            <button class="btn btn-primary" type="submit">Създай полица</button>
+
+        </form>
+    </div>
+        <!-- End Policy Create Form -->
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Автомобили</h2>
+    <a href="{% url 'car_create' %}" class="btn btn-primary">Добавяне на автомобил</a>
+
+    {% if cars %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+{#                {% if user.is_staff %}#}
+{#                    <th>Потребител</th>#}
+{#                {% endif %}#}
+                <th>Марка</th>
+                <th>Модел</th>
+                <th>Година на производство</th>
+{#                <th>Полици</th>#}
+{#                <th>Оферти</th>#}
+                <th>Действия</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for car in cars %}
+                <tr>
+                    <td>{{ car.id }}</td>
+{#                    {% if user.is_staff %}#}
+{#                        <td>{{ car.user }}</td>#}
+{#                    {% endif %}#}
+                    <td>{{ car.make }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.year }} г.</td>
+{#                    <td>{{ car.policy }}</td>#}
+{#                    <td>{{ car.offer }}</td>#}
+                    <td>
+                        <a href="{% url 'car_details' car.pk %}" class="btn btn-sm btn-primary">Преглед</a>
+                    </td>
+                    <td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нямате автомобили.</p>
+    {% endif %}
+{% endblock %}

@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <!-- Start Edit Profile Section -->
-    <div class="create">
-        <h2>Нова оферта</h2>
+    <!-- Start Car Create Section -->
+    <div class="create" style="
+        align-items: start;
+        max-width: 600px;
+        padding: 20px;">
+        <h2>Създаване на автомобил</h2>
 
-        <!-- Start Offer From -->
+        <!-- Start Car Create From -->
         <form method="post">
             {% csrf_token %}
 
@@ -19,9 +22,9 @@
 
             {% endfor %}
 
-            <!-- Calculate Premium Button -->
-            <button class="btn" type="submit">Вземи оферта</button>
+            <!-- Submit Button -->
+            <button class="btn btn-primary" type="submit">Запази автомобил</button>
 
         </form>
-        <!-- End Edit Profile Form -->
+        <!-- End Car Create Form -->
 {% endblock %}

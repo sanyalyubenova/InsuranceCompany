@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Оферта #{{ offer.id }}</h2>
+    <div class="offer-details" style="margin-top: 30px">
+        <p><strong>Автомобил:</strong><a
+                style="margin-left: 10px"> {{ offer.car.make }} {{ offer.car.model }} {{ offer.car.year }}г.</a></p>
+        <p><strong>Застрахователна сума:</strong><a style="margin-left: 10px"> {{ offer.insurance_amount }} лв.</a></p>
+        <p><strong>Цена на застраховката:</strong><a style="
+            font-size: large;
+            font-style: italic;
+            margin-left: 10px"> {{ offer.premium }} лв.</a></p>
+        <p><strong>Статус:</strong><a style="margin-left: 10px"> {{ offer.get_status_display }} </a></p>
+        <a><strong>Отстъпки:</strong></a>
+        {% if offer.discounts %}
+        {% for discount in offer.discounts.all %}
+            <p style="margin-bottom: 5px">• {{ discount }} - {{ discount.percentage }}%</p>
+            {% endfor %}
+            {% else %}
+            no
+        {% endif %}
+
+
+    </div>
+
+    {% if offer.status == 'pending' %}
+        <div class="d-flex gap-2" style="margin-bottom: 5px">
+            <form action="{% url 'accept_offer' offer.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Приеми офертата</button>
+            </form>
+            <form action="{% url 'reject_offer' offer.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Откажи офертата</button>
+            </form>
+        </div>
+
+    {% endif %}
+    <!-- Link to Edit Offer  -->
+    {% if perms.common.change_offer %}
+        <div class="d-flex gap-2" style="margin-bottom: 5px">
+        <a href="{% url 'offer_edit' offer.pk %}" class="btn btn-primary">Редактирай офертата</a>
+        <p>
+        </p>
+    {% endif %}
+    {% if perms.common.delete_offer %}
+        <!-- Link to Delete Offer-->
+        <a href="{% url 'offer_delete' offer.pk %}" class="btn btn-danger">Изтрий офертата</a>
+        </div>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'offer_list' %}">Назад</a>
+
+{% endblock %}

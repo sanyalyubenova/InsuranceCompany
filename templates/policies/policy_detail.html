@@ -9,5 +9,13 @@
         <p>Статус: {{ insurancepolicy.get_status_display }}</p>
     </div>
 
-    <a href="{% url 'profile_details' request.user.pk %}">Назад</a>
+    {% if perms.policies.change_insurancepolicy %}
+        <a href="{% url 'policy_update' insurancepolicy.id %}" class="btn btn-primary">Редактирай</a>
+    {% endif %}
+
+    {% if perms.policies.delete_insurancepolicy %}
+        <a href="{% url 'policy_delete' insurancepolicy.id %}" class="btn btn-danger">Изтрий</a>
+    {% endif %}
+
+    <a class="btn btn-primary" href="javascript:history.back()">Назад</a>
 {% endblock %}

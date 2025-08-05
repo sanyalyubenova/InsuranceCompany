@@ -16,6 +16,9 @@ class Car(models.Model):
     model = models.CharField(max_length=100)
     year = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.make} {self.model} {self.year}"
+
 
 class Offer(models.Model):
     STATUS_CHOICES = [
@@ -32,7 +35,7 @@ class Offer(models.Model):
         validators=[MinValueValidator(0)],
         verbose_name="Застрахователна сума"
     )
-    discounts = models.ManyToManyField(Discount)
+    discounts = models.ManyToManyField(Discount, blank=True, related_name="offers")
     premium = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
@@ -42,29 +45,13 @@ class Offer(models.Model):
         verbose_name="Статус"
     )
     related_name = 'offers'
-    created_policy = models.OneToOneField(InsurancePolicy, on_delete=models.CASCADE, null=True, related_name='offer_to_policy')
+    created_policy = models.OneToOneField(InsurancePolicy, on_delete=models.CASCADE, null=True,
+                                          related_name='offer_to_policy')
 
-    def calculate_premium(self):
-        base_percentage = Decimal('0.05')
-        vat_percentage = Decimal('1.02')
-
-        base_premium = self.insurance_amount * base_percentage
-
-        discount_percent = sum(
-            discount.discount_percentage()
-            for discount in self.discounts.all()
-        )
-
-        discounted_premium = base_premium * (1 - Decimal(str(discount_percent)))
-
-        final_premium = discounted_premium * vat_percentage
-
-        return final_premium.quantize(Decimal('0.00'))
 
     def accept(self):
         self.status = 'accepted'
         self.save()
-
 
     def reject(self):
         self.status = 'rejected'

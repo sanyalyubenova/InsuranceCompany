@@ -27,6 +27,7 @@ class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         help_text='Групите, към които принадлежи потребителят.',
         related_name="appuser_groups",
         related_query_name="appuser",
+        default="Clients"
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',

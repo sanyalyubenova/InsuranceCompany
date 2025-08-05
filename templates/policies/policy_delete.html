@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+ <!-- Start Delete Policy Section -->
+    <div class="delete-policy">
+    <h1>Изтриване на полицата</h1>
+        <p>Желаете ли да изтрийете полицата?</p>
+        <strong style="color: red">Това действие е необратимо.</strong>
+        <p></p>
+        <form method="post" action="{% url 'policy_delete' object.id %}">
+            {% csrf_token %}
+            <div class="sure-buttons">
+                <!-- Yes (Delete Policy) Button -->
+                <button class="btn btn-danger">Изтрий полицата</button>
+                <!-- Go Back Button -->
+                <a class="btn" href="javascript:history.back()" style="border-color: black">Върни се</a>
+            </div>
+        </form>
+    </div>
+    <!-- End Delete Policy Section -->
+{% endblock %}

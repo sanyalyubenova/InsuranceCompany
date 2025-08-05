@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Щета #{{ claim.id }}</h2>
+    <div class="claim-details" style="margin-top: 30px">
+        <p><strong>Полица:</strong><a href="{% url 'policy_detail' claim.policy.id %}" style="margin-left: 10px"> {{ claim.policy.policy_number }} </a></p>
+        <p><strong>Дата на щетата:</strong><a style="margin-left: 10px"> {{ claim.claim_date|date:"d.m.Y" }} г.</a></p>
+        <p><strong>Размер на щетата:</strong><a style="margin-left: 10px"> {{ claim.amount }} лв.</a></p>
+        <p><strong>Статус:</strong><a style="margin-left: 10px"> {{ claim.get_status_display }} </a></p>
+                 <p><strong>Описание:</strong></p>
+         <div style="max-width: 30%; word-wrap: break-word;">
+             {{ claim.description|linebreaks }}
+         </div>
+        
+                 <p><strong>Снимка на щетата:</strong></p>
+         {% if claim.photos %}
+             <div style="margin-left: 20px; margin-top: 10px;">
+                 <a href="{{ claim.photos.url }}" target="_blank">
+                     <img src="{{ claim.photos.url }}" alt="Снимка на щета" 
+                          style="max-width: 300px; max-height: 300px; object-fit: contain; border-radius: 8px;">
+                 </a>
+             </div>
+         {% else %}
+             <div style="margin-left: 20px; margin-top: 10px;">
+                 няма качена снимка
+             </div>
+         {% endif %}
+     </div>
+
+     <div style="margin-top: 30px;">
+         <!-- Link to Edit Claim  -->
+    {% if perms.policies.change_claim %}
+        <div class="d-flex gap-2" style="margin-bottom: 5px">
+        <a href="{% url 'claim_edit' claim.pk %}" class="btn btn-primary">Редактирай щетата</a>
+        <p>
+        </p>
+    {% endif %}
+    {% if perms.policies.delete_claim %}
+        <!-- Link to Delete Claim-->
+        <a href="{% url 'claim_delete' claim.pk %}" class="btn btn-danger">Изтрий щетата</a>
+        </div>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'claim_list' %}">Назад</a>
+{% endblock %}
