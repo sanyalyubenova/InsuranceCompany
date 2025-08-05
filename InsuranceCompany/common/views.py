@@ -39,7 +39,6 @@ def contact(request):
 
 
 @login_required
-@permission_required('common.add_offer')
 def offer_create(request):
     try:
         if request.method == 'POST':
@@ -102,6 +101,10 @@ def offer_create(request):
                     1 - sum(obj.discount_percentage() for obj in discounts)) * vat_percentage
                 offer.premium = final_premium
                 offer.discounts.set(discounts)
+                
+                # Save discount information as text at the moment of creation
+                discount_texts = [str(discount) for discount in discounts]
+                offer.applied_discounts_text = ", ".join(discount_texts) if discount_texts else "Няма приложени отстъпки"
                 offer.save()
 
                 return redirect('offer_details', offer_id=offer.id)
@@ -219,7 +222,6 @@ class OfferDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 
 
 @login_required
-@permission_required('common.change_offer')
 def accept_offer(request, offer_id):
     try:
         if not str(offer_id).isdigit():
@@ -253,7 +255,6 @@ def accept_offer(request, offer_id):
 
 
 @login_required
-@permission_required('common.change_offer')
 def reject_offer(request, offer_id):
     try:
         if not str(offer_id).isdigit():
