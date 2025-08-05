@@ -72,16 +72,18 @@ class Command(BaseCommand):
 
         permissions_map = {
             'Clients': [
-             view_policy,
-                 view_claim, change_claim, add_claim,
-                 view_offer,
+                view_profile, change_profile, delete_profile, add_profile,
+                view_policy,
+                view_claim, change_claim, add_claim,
+                view_offer, add_offer,
+                add_car, view_car
             ],
 
             'Staff': [
-                 view_profile,  change_profile,
+                 view_profile,  change_profile,  add_profile, delete_profile,
                  view_policy,   change_policy,   add_policy,
-                 view_claim,    change_claim,    add_claim,    delete_claim,
-                 view_discount, change_discount, add_discount, delete_discount,
+                 view_claim,    change_claim,    add_claim,    
+                 view_discount, change_discount, add_discount, 
                  view_car,      change_car,      add_car,
                  view_offer,    change_offer,    add_offer,
             ],
