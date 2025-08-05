@@ -1,3 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+    <!-- Start Claim Edit Section -->
+    <div class="edit-delete" style="
+        align-items: start;
+        max-width: 600px;
+        padding: 20px;">
+        <h2>Редактиране на щета #{{ claim.id }}</h2>
+
+        <!-- Start Claim Edit From -->
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="error" style="color: red; margin-bottom: 5px; font-weight: bold; font-style: normal">
+                    {{ field.errors }}
+                </div>
+                <div class="label-input" style="
+                    display: flex;
+                    flex-direction: column;">
+                    <label style="margin-bottom: 5px; font-weight: bold;">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                <br>
+
+            {% endfor %}
+
+            <!-- Edit Claim Button -->
+            <button class="btn btn-primary" type="submit">Редактирай</button>
+
+        </form>
+    </div>
+        <!-- End Claim Edit Form -->
 {% endblock %}
