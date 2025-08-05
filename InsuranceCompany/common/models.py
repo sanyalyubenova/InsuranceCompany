@@ -37,6 +37,7 @@ class Offer(models.Model):
         verbose_name="Застрахователна сума"
     )
     discounts = models.ManyToManyField(Discount, blank=True, related_name="offers")
+    applied_discounts_text = models.TextField(blank=True, verbose_name="Приложени отстъпки")
     premium = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
