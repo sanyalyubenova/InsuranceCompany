@@ -72,7 +72,7 @@ class Command(BaseCommand):
 
         permissions_map = {
             'Clients': [
-                 view_policy,
+             view_policy,
                  view_claim, change_claim, add_claim,
                  view_offer,
             ],

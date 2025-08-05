@@ -8,9 +8,6 @@
             <thead>
             <tr>
                 <th>ID</th>
-                {#                {% if user.is_staff %}#}
-                {#                    <th>Потребител</th>#}
-                {#                {% endif %}#}
                 <th>Полица</th>
                 <th>Дата на щета</th>
                 <th style="width: 30%;">Описание</th>
@@ -25,9 +22,6 @@
             {% for claim in claims %}
                 <tr>
                     <td>{{ claim.id }}</td>
-                    {#                    {% if user.is_staff %}#}
-                    {#                        <td>{{ car.user }}</td>#}
-                    {#                    {% endif %}#}
                     <td>{{ claim.policy.policy_number }}</td>
                     <td>{{ claim.claim_date|date:"d.m.Y" }} г.</td>
                     <td>

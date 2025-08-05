@@ -3,17 +3,27 @@
 
 {% block content %}
     <!-- Start Register Form-->
+    <h1>Регистрация</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.email|placeholder:'Въведи имейл' }}
-        {{ form.email.errors }}
-        {{ form.password1|placeholder:'Въведи парола' }}
-        {{ form.password1.errors }}
-        {{ form.password2|placeholder:'Повтори паролата' }}
-        {{ form.password2.errors }}
+
+        {% for field in form %}
+            {% if not field.name == 'password2' %}
+                <div class="error" style="color: red; margin-bottom: 5px; font-weight: bold; font-style: normal">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+            <div class="label-input" style="display: flex; flex-direction: column; margin-right: 50%">
+                <label style="margin-bottom: 5px; font-weight: bold;">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+            </div>
+            <br>
+        {% endfor %}
 
         <!-- Register Button-->
-        <button type="submit">Регистрирай се</button>
+        <button class="btn btn-primary" type="submit">Регистрирай се</button>
     </form>
     <!-- End Register Form -->
 {% endblock %}

@@ -39,7 +39,9 @@
     <!-- Link to Edit Offer  -->
     {% if perms.common.change_offer %}
         <div class="d-flex gap-2" style="margin-bottom: 5px">
-        <a href="{% url 'offer_edit' offer.pk %}" class="btn btn-primary">Редактирай офертата</a>
+                        {% if perms.common.change_offer %}
+                    <a href="{% url 'offer_edit' offer.pk %}" class="btn btn-primary">Редактирай офертата</a>
+                {% endif %}
         <p>
         </p>
     {% endif %}

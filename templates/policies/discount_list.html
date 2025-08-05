@@ -23,7 +23,9 @@
                     <td>{{ discount.percentage }} %</td>
                     <td>
                         {% if perms.discounts.change_discount %}
-                            <a href="{% url 'discount_edit' discount.pk %}" class="btn btn-primary">Редактирай</a>
+                            {% if perms.policies.change_discount %}
+                    <a href="{% url 'discount_edit' discount.pk %}" class="btn btn-primary">Редактирай</a>
+                {% endif %}
                         {% endif %}
                     </td>
                     <td>

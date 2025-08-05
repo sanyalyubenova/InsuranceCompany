@@ -31,7 +31,9 @@
          <!-- Link to Edit Claim  -->
     {% if perms.policies.change_claim %}
         <div class="d-flex gap-2" style="margin-bottom: 5px">
-        <a href="{% url 'claim_edit' claim.pk %}" class="btn btn-primary">Редактирай щетата</a>
+                        {% if perms.policies.change_claim %}
+                    <a href="{% url 'claim_edit' claim.pk %}" class="btn btn-primary">Редактирай щетата</a>
+                {% endif %}
         <p>
         </p>
     {% endif %}

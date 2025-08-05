@@ -10,11 +10,23 @@
             <!-- Start Login Form-->
             <form method="post">
                 {% csrf_token %}
-                {{ form.username|placeholder:'Въведи email' }}
-                {{ form.password|placeholder:'Въведи парола' }}
+                
+                {% for field in form %}
+
+                    <div class="label-input" style="display: flex; flex-direction: column; margin-right: 50%">
+                        <label style="margin-bottom: 5px; font-weight: bold;">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% if field.name == "password" %}
+                    <div class="error" style="color: red; margin-bottom: 5px; font-weight: bold; font-style: normal">
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
 
                 <!-- Login Button-->
-                <button type="submit">Влизане</button>
+                <button class="btn btn-primary" type="submit" >Влизане</button>
             </form>
             <!-- End Login Form -->
 

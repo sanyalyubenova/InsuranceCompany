@@ -13,7 +13,9 @@
 
             {% for field in form %}
 
-                <p class="error"> {{ field.errors }} </p>
+                <div class="error" style="color: red; margin-bottom: 5px; font-weight: bold; font-style: normal">
+                    {{ field.errors }}
+                </div>
                 <div class="label-input" style="
                     display: flex;
                     flex-direction: column;">

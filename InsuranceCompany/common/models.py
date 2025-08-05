@@ -12,6 +12,7 @@ from InsuranceCompany.policies.models import Discount, InsurancePolicy
 # Create your models here.
 
 class Car(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_user')
     make = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     year = models.IntegerField()
@@ -47,7 +48,6 @@ class Offer(models.Model):
     related_name = 'offers'
     created_policy = models.OneToOneField(InsurancePolicy, on_delete=models.CASCADE, null=True,
                                           related_name='offer_to_policy')
-
 
     def accept(self):
         self.status = 'accepted'

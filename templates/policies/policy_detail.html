@@ -10,7 +10,9 @@
     </div>
 
     {% if perms.policies.change_insurancepolicy %}
-        <a href="{% url 'policy_update' insurancepolicy.id %}" class="btn btn-primary">Редактирай</a>
+                        {% if perms.policies.change_insurancepolicy %}
+                    <a href="{% url 'policy_update' insurancepolicy.id %}" class="btn btn-primary">Редактирай</a>
+                {% endif %}
     {% endif %}
 
     {% if perms.policies.delete_insurancepolicy %}

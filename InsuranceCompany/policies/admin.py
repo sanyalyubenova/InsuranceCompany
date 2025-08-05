@@ -28,13 +28,9 @@ class InsurancePolicyAdmin(admin.ModelAdmin):
 
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('discount_type', 'percentage', 'get_applicable_policies_count')
+    list_display = ('discount_type', 'percentage')
     list_filter = ('discount_type',)
     search_fields = ('discount_type',)
-    
-    def get_applicable_policies_count(self, obj):
-        return obj.applicable_to.count()
-    get_applicable_policies_count.short_description = 'Applicable Policies'
 
 
 @admin.register(Claim)
