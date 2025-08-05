@@ -227,11 +227,14 @@ def accept_offer(request, offer_id):
 
         offer = Offer.objects.get(id=offer_id, user=request.user)
         offer.accept()
+        start_date = datetime.today()
+        end_date = start_date.replace(year=start_date.year + 1)
+        
         policy = InsurancePolicy.objects.create(
             user=request.user,
             car=offer.car,
-            start_date=datetime.today(),
-            end_date=datetime.today(),
+            start_date=start_date,
+            end_date=end_date,
             price=offer.premium,
             insurance_amount=offer.insurance_amount,
             offer=offer
