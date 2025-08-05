@@ -1,3 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+ <!-- Start Claim Delete Section -->
+    <div class="delete-offer">
+    <h1>Изтриване на щета #{{ claim.id }}</h1>
+        <p>Желаете ли да изтрийете щетата?</p>
+        <strong style="color: red">Това действие е необратимо.</strong>
+        <p></p>
+        <form method="post" action="{% url 'claim_delete' object.pk %}">
+            {% csrf_token %}
+            <div class="sure-buttons">
+                <!-- Yes (Delete Discount) Button -->
+                <button class="btn btn-danger">Изтрий щетата</button>
+                <!-- Go Back Button -->
+                <a class="btn" href="javascript:history.back()" style="border-color: black">Върни се</a>
+            </div>
+        </form>
+    </div>
+    <!-- End laim Delete Section -->
 {% endblock %}
