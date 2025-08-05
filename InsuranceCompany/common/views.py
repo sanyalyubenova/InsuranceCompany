@@ -102,9 +102,6 @@ def offer_create(request):
                 offer.premium = final_premium
                 offer.discounts.set(discounts)
                 
-                # Save discount information as text at the moment of creation
-                discount_texts = [str(discount) for discount in discounts]
-                offer.applied_discounts_text = ", ".join(discount_texts) if discount_texts else "Няма приложени отстъпки"
                 offer.save()
 
                 return redirect('offer_details', offer_id=offer.id)
