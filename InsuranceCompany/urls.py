@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from InsuranceCompany.accounts.views import APIUserListView, APIUserDetailView
-from InsuranceCompany.common.views import APICarListView, APICarDetailView, APIOfferListView, APIOfferDetailView, custom_404, custom_500, custom_403
+from InsuranceCompany.common.views import APICarListView, APICarDetailView, APIOfferListView, APIOfferDetailView
 from InsuranceCompany.policies.views import APIPolicyListView, APIPolicyDetailView, APIDiscountListView, \
     APIDiscountDetailView, APIClaimListView, APIClaimDetailView
 
