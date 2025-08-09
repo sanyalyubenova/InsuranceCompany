@@ -36,9 +36,7 @@
 
             <!-- Link to Edit Profile  -->
             <div class="d-flex gap-2">
-                {% if perms.accounts.change_profile %}
                     <a href="{% url 'profile_edit' user.pk %}" class="btn btn-primary">Редактирай профил</a>
-                {% endif %}
                 <p>
 
                 </p>
