@@ -57,6 +57,7 @@ def offer_create(request):
                     return render(request, 'common/offer_create.html', {'form': form})
 
                 car, created = Car.objects.get_or_create(
+                    user=request.user,
                     make=form.cleaned_data['make'],
                     model=form.cleaned_data['model'],
                     year=form.cleaned_data['year']
@@ -67,7 +68,7 @@ def offer_create(request):
                     car=car,
                     insurance_amount=form.cleaned_data['insurance_amount'],
                     status='pending',
-                    premium=Decimal('0.00')
+                    premium=Decimal('0.00'),
                 )
 
                 base_percentage = Decimal('0.05')
@@ -101,7 +102,7 @@ def offer_create(request):
                     1 - sum(obj.discount_percentage() for obj in discounts)) * vat_percentage
                 offer.premium = final_premium
                 offer.discounts.set(discounts)
-                
+
                 offer.save()
 
                 return redirect('offer_details', offer_id=offer.id)
@@ -119,14 +120,14 @@ def offer_create(request):
 
 
 @login_required
-@permission_required('common.view_offer')
 def offer_list(request):
     try:
         if request.user.is_staff or request.user.is_superuser:
             offers = Offer.objects.all().order_by('-created_at')
             context = {'offers': offers}
         else:
-            offers = Offer.objects.filter(user=request.user).order_by('-created_at')
+            user = request.user
+            offers = Offer.objects.filter(user=user).order_by('-created_at')
             context = {'offers': offers}
         return render(request, 'common/offer_list.html', context)
     except Exception as e:
@@ -138,7 +139,6 @@ def offer_list(request):
 
 
 @login_required
-@permission_required('common.view_offer')
 def offer_details(request, offer_id):
     try:
         if not str(offer_id).isdigit():
@@ -165,7 +165,7 @@ def offer_edit(request, offer_id):
                 'error_message': 'Невалиден ID на оферта.'
             })
 
-        offer = get_object_or_404(Offer, id=offer_id, user=request.user)
+        offer = get_object_or_404(Offer, id=offer_id)
 
         if request.method == 'POST':
             form = OfferEditForm(request.POST, instance=offer)
@@ -290,7 +290,6 @@ def profile(request):
 
 
 @login_required
-@permission_required('common.add_car')
 def car_create(request):
     try:
         if request.method == 'POST':
@@ -333,7 +332,6 @@ def car_create(request):
 
 
 @login_required
-@permission_required('common.view_car')
 def car_list(request):
     try:
         if request.user.is_staff or request.user.is_superuser:
@@ -355,7 +353,6 @@ def car_list(request):
 
 
 @login_required
-@permission_required('common.view_car')
 def car_details(request, pk):
     try:
         if not str(pk).isdigit():
