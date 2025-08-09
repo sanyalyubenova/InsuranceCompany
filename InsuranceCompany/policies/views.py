@@ -17,8 +17,7 @@ from InsuranceCompany.policies.serializers import InsurancePolicySerializer, Dis
 # Create your views here.
 
 
-class PolicyListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = 'policies.view_insurancepolicy'
+class PolicyListView(LoginRequiredMixin, ListView):
     model = InsurancePolicy
     template_name = 'policies/policy_list.html'
     context_object_name = 'policies'
@@ -30,8 +29,7 @@ class PolicyListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             return InsurancePolicy.objects.filter(user=self.request.user)
 
 
-class PolicyDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    permission_required = 'policies.view_insurancepolicy'
+class PolicyDetailView(LoginRequiredMixin, DetailView):
     model = InsurancePolicy
     template_name = 'policies/policy_detail.html'
 
@@ -130,8 +128,7 @@ class DiscountDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView
         return redirect(self.get_success_url())
 
 
-class ClaimListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = 'policies.view_claim'
+class ClaimListView(LoginRequiredMixin, ListView):
     model = Claim
     template_name = 'policies/claim_list.html'
     context_object_name = 'claims'
@@ -140,11 +137,10 @@ class ClaimListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         if self.request.user.is_staff:
             return Claim.objects.all()
         else:
-            return Claim.objects.filter(user=self.request.user)
+            return Claim.objects.filter(policy__user=self.request.user)
 
 
-class ClaimCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = 'policies.add_claim'
+class ClaimCreateView(LoginRequiredMixin, CreateView):
     model = Claim
     form_class = ClaimForm
     template_name = 'policies/claim_create.html'
@@ -155,16 +151,15 @@ class ClaimCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ClaimDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    permission_required = 'policies.view_claim'
+class ClaimDetailView(LoginRequiredMixin, DetailView):
     model = Claim
     template_name = 'policies/claim_details.html'
-
+    
     def get_queryset(self):
         if self.request.user.is_staff:
             return Claim.objects.all()
         else:
-            return Claim.objects.filter(user=self.request.user)
+            return Claim.objects.filter(policy__user=self.request.user)
 
 
 class ClaimEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
