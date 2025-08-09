@@ -2,7 +2,12 @@
 
 {% block content %}
     <h2>Полици</h2>
-    <a href="{% url 'policy_create' %}" class="btn btn-primary">Нова полица</a>
+    {% if user.is_staff %}
+        <a href="{% url 'policy_create' %}" class="btn btn-primary">Нова полица</a>
+    {% else %}
+        <a href="{% url 'offer_create' %}" class="btn btn-primary">Оферта за нова полица</a>
+    {% endif %}
+
 
     {% if policies %}
         <table class="table">
