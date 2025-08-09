@@ -183,6 +183,7 @@
                                 <i>Автомобили</i>
                             </a>
                         </li>
+						{% if user.is_staff %}
                         <li class="nav-item">
                             <!-- Link to Discounts Page -->
                             <a href="{% url 'discount_list' %}" style="
@@ -194,6 +195,7 @@
                                 <i>Отстъпки</i>
                             </a>
                         </li>
+						{% endif %}
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
                             <button class="btn" style="
