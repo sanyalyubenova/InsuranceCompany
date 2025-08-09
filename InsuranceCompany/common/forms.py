@@ -50,7 +50,7 @@ class OfferCreateForm(forms.ModelForm):
 class OfferEditForm(forms.ModelForm):
     class Meta:
         model = Offer
-        fields = ['insurance_amount', 'status', 'discounts', 'premium']
+        fields = ['insurance_amount', 'status', 'premium']
 
         widgets = {
             'insurance_amount': forms.NumberInput(attrs={'class': 'form-control'}),
