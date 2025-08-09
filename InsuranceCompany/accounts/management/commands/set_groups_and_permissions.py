@@ -112,6 +112,6 @@ class Command(BaseCommand):
             for perm in current_perms - desired_perms:
                 group.permissions.remove(perm)
 
-            self.stdout.write(self.style.SUCCESS(f'Set permissions за {group_name}'))
+            self.stdout.write(self.style.SUCCESS(f'Set permissions for {group_name}'))
 
         self.stdout.write(self.style.SUCCESS('Successfully set all permissions'))
